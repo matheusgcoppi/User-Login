@@ -1,0 +1,16 @@
+POST http://localhost:3333/user
+Content-Type: application/json
+
+{
+    "firstName": "teste",
+    "lastName": "teste",
+    "email": "kk6k",
+    "password": "password",
+    "age": 5,
+    "role": "email"
+    
+}
+
+###email, password, age, firstName
+
+GET http://localhost:3333/signup
