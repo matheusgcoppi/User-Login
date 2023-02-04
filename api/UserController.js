@@ -71,15 +71,13 @@ module.exports = {
             if(user)  {
                 const match = await bcrypt.compare(password, user.password)
                 if(match) {
-                    return res.send("login")
+                    return res.send({"sucess": "true"})
                 }
                 else {
-                    return res.send("There is something wrong with your password")
+                    return res.send({"sucess": "false"})
                 }
                         
             }
-            
-
 
         } catch (error) {
             return res.json({
