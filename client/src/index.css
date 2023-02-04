@@ -1,0 +1,18 @@
+* {
+  margin: 0;
+}
+
+.all {
+  margin-top: 170px;
+}
+
+.button:focus {
+  background-color: blue;
+}
+
+.b1 {
+  margin-left: 150px;
+}
+
+
+
