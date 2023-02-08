@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { useNavigate } from 'react-router';
 const Register = () => {
+
+    const navigate = useNavigate()
 
     const [firstName, setFirstName] = useState('')
     const [lastName, setlastName] = useState('')
@@ -9,11 +12,17 @@ const Register = () => {
     const [age, setAge] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    
+    const [confirmPassword, setConfirmPassword] = useState('')
+    const [wrongPassword, setWrongPassword] = useState(false)
+    const [wrongEmail, setEmailPassword] = useState(false)
+
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        
+        if(password !== confirmPassword) {
+            setWrongPassword(true)
+            return
+        }
         
         const createUser = {firstName,lastName,role,age, email, password}
         console.log(createUser)
@@ -24,9 +33,22 @@ const Register = () => {
             body: JSON.stringify(createUser)
     }).then(async response => {
         console.log(response)
+        
         try {
-         const data = await response.json()
-         console.log(data)
+            const data = await response.json()
+            console.log(data)
+            setWrongPassword(false)
+
+            if(data.sucess === "true") {
+                navigate('/')
+            }
+
+            if(data.error === "email") {
+                setEmailPassword(true)
+                setWrongPassword(false)
+                return
+            }
+            
             
        } catch(error) {
          console.log('Error happened here!')
@@ -64,6 +86,11 @@ const Register = () => {
           <Form.Label>Password</Form.Label>
           <Form.Control type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
 
+          <Form.Label>Confirm Password</Form.Label>
+          <Form.Control type="password" placeholder="Password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}/>
+          <div>{wrongPassword && <p className="text-danger">Those passwords didn't match. Try again.</p>}</div>
+          <div>{wrongEmail && <p className="text-danger">There is an email with the same characters</p>}</div>
+
          
         </Form.Group>
         
@@ -72,8 +99,7 @@ const Register = () => {
         </Button>
       </Form>
       </div>
-      <div>{email}</div>
-      <div>{password}</div>
+      
       </div>
      );
 }

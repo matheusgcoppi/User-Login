@@ -32,7 +32,7 @@ module.exports = {
 
             if (verifyemail) {
                 return res.send({
-                    "error": "There is an email with the same characters"
+                    "error": "email"
                 })
             }
 
@@ -47,11 +47,12 @@ module.exports = {
                 }
             });
 
-            return res.send(user)
+            return res.send({"sucess" : "true"})
 
         } catch (error) {
             
             console.log(error)
+            
 
         }
     },

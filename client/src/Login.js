@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+
 
 const Login = () => {
   const navigate = useNavigate()
@@ -25,7 +26,8 @@ const Login = () => {
          console.log(data)
          
          if(data.sucess === "true") {
-            console.log("You're loggin in");    
+            console.log("You're loggin in"); 
+            navigate("/logged")   
             
         }
         if(data.sucess === "false") {
@@ -63,6 +65,11 @@ const Login = () => {
       </Form.Group>
       <Button variant="primary" type="submit">
         Submit
+      </Button>
+      <Button className="btn-sign-up" variant="danger">
+      <Link className="btn-sign" to="/register">
+      Sign Up
+      </Link>
       </Button>
     </Form>
         </div>
