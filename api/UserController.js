@@ -12,10 +12,10 @@ module.exports = {
             const {
                 firstName,
                 lastName,
-                email,
-                password,
+                role,
                 age,
-                role
+                email,
+                password
             } = req.body
 
             const salt = await bcrypt.genSalt();
@@ -31,8 +31,8 @@ module.exports = {
             })
 
             if (verifyemail) {
-                return res.json({
-                    error: "there is a email with the same name, please change."
+                return res.send({
+                    "error": "There is an email with the same characters"
                 })
             }
 
@@ -40,19 +40,18 @@ module.exports = {
                 data: {
                     firstName: firstName,
                     lastName: lastName,
-                    email: email,
-                    password: hash,
+                    role: role,
                     age: age,
-                    role: role
+                    email: email,
+                    password: hash
                 }
             });
 
-            return res.json(user)
+            return res.send(user)
 
         } catch (error) {
-            return res.json({
-                error
-            })
+            
+            console.log(error)
 
         }
     },
@@ -80,9 +79,8 @@ module.exports = {
             }
 
         } catch (error) {
-            return res.json({
-                error
-            })
+            
+            return res.json({ error })
         }
     }
 }

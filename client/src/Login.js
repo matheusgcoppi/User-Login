@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate()
     
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -19,15 +19,18 @@ const Login = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(info)
     }).then(async response => {
-        console.log(response.ok)
+        console.log(response.body)
         try {
          const data = await response.json()
          console.log(data)
+         
          if(data.sucess === "true") {
-            console.log("You're loggin in");
+            console.log("You're loggin in");    
+            
         }
         if(data.sucess === "false") {
-          console.log("There's something wrong with the password");
+          console.log("There's something wrong with the password");  
+          navigate("/register")    
       }
             
        } catch(error) {
@@ -49,9 +52,6 @@ const Login = () => {
             <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
             <Form.Control type="email" value = {email} onChange={(e) => setEmail (e.target.value)} placeholder="Enter email" required/>
-            <Form.Text className="text-muted">
-          We'll never share your email with anyone else.
-            </Form.Text>
         </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicPassword">
